@@ -1,4 +1,4 @@
-package com.andyshon.databaseusingrxjava;
+package com.andyshon.databaseusingrxjava.Database;
 
 import android.provider.BaseColumns;
 

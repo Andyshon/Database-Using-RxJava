@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">DatabaseUsingRxJava</string>
+    <string name="app_name">Database Using RxJava</string>
+    <string name="show_all_users">Show All Users</string>
+    <string name="add_new_user">New user</string>
+    <string name="nyc">NYC</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="_20">20</string>
+    <string name="andy">Andyshon</string>
+    <string name="age">Age</string>
+    <string name="name">Name</string>
+    <string name="city">City</string>
+    <string name="ok">OK</string>
+    <string name="delete">Delete</string>
 </resources>

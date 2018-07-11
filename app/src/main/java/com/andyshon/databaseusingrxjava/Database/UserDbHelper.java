@@ -1,4 +1,4 @@
-package com.andyshon.databaseusingrxjava;
+package com.andyshon.databaseusingrxjava.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,25 +11,21 @@ import android.util.Log;
 
 public class UserDbHelper extends SQLiteOpenHelper {
 
-    /**
-     * Имя файла базы данных
-     */
-    public static final String DATABASE_NAME = "hotel.db";
+    private static final String DATABASE_NAME = "Guests.db";
 
     /**
-     * Версия базы данных. При изменении схемы увеличить на единицу
+     * Version of database. When changing schemes, to increment
      */
     private static final int DATABASE_VERSION = 1;
 
 
     public UserDbHelper(Context context) {
         super(context, UserContract.UserEntry.TABLE_NAME, null, DATABASE_VERSION);
-        //SQLiteDatabase.deleteDatabase(new java.io.File(DATABASE_NAME));
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        // Строка для создания таблицы
+        // string for query create table
         String SQL_CREATE_GUESTS_TABLE = "CREATE TABLE " + UserContract.UserEntry.TABLE_NAME + " ("
                 + UserContract.UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + UserContract.UserEntry.COLUMN_NAME + " TEXT NOT NULL, "
@@ -38,16 +34,15 @@ public class UserDbHelper extends SQLiteOpenHelper {
                 + UserContract.UserEntry.COLUMN_AGE + " INTEGER NOT NULL DEFAULT 0);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_GUESTS_TABLE);
-        //sqLiteDatabase.execSQL("delete from "+ UserContract.UserEntry.TABLE_NAME);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        Log.w("SQLite", "Обновляемся с версии " + i + " на версию " + i1);
+        Log.w("SQLite", "Update from version " + i + " to version " + i1);
 
-        // Удаляем старую таблицу и создаём новую
+        // delete old table and create new
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
-        // Создаём новую таблицу
+        // create new table
         onCreate(sqLiteDatabase);
     }
 }
