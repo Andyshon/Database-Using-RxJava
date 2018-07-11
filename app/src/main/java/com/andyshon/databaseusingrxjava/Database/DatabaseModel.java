@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.andyshon.databaseusingrxjava.Entity.User;
+import com.andyshon.databaseusingrxjava.FilterOperation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,84 @@ public class DatabaseModel {
             }
         }).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
+    }
+
+
+    public Observable<List<User>> getUsersByFilter (int byAge, FilterOperation.ByAge filterAge, FilterOperation.ByGender filterGender) {
+
+        SQLiteDatabase db = userDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                UserContract.UserEntry._ID,
+                UserContract.UserEntry.COLUMN_NAME,
+                UserContract.UserEntry.COLUMN_CITY,
+                UserContract.UserEntry.COLUMN_GENDER,
+                UserContract.UserEntry.COLUMN_AGE };
+
+        String operatorAge;
+        switch (filterAge) {
+            case MORETHAN: operatorAge = ">?"; break;
+            case LESSTHAN: operatorAge = "<?"; break;
+            default: operatorAge = "=?"; break;
+        }
+
+        String operatorGender;
+        switch (filterGender) {
+            case MALE: operatorGender = "1"; break;
+            case FEMALE: operatorGender = "0"; break;
+            default: operatorGender = "3"; break;
+        }
+
+
+        String selection = UserContract.UserEntry.COLUMN_AGE + operatorAge + " and " + UserContract.UserEntry.COLUMN_GENDER + "=?"/*operatorGender*/;
+        String[] selectionArgs = {String.valueOf(byAge), operatorGender};
+
+        // Make a request
+        Cursor cursor = db.query(
+                UserContract.UserEntry.TABLE_NAME,   // table
+                projection,            // columns
+                selection,                  // columns for condition WHERE
+                selectionArgs,                  // values for condition WHERE
+                null,                  // Don't group the rows
+                null,                  // Don't filter by row groups
+                UserContract.UserEntry.COLUMN_AGE + " DESC");     // sorting order
+
+        try {
+
+            // Find the index of each column
+            int idColumnIndex = cursor.getColumnIndex(UserContract.UserEntry._ID);
+            int nameColumnIndex = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_NAME);
+            int cityColumnIndex = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_CITY);
+            int genderColumnIndex = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_GENDER);
+            int ageColumnIndex = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_AGE);
+
+            List<User> filteredUsers = new ArrayList<>();
+            // Iterate through all rows
+            while (cursor.moveToNext()) {
+                // Use the index to get a string or number
+                int currentID = cursor.getInt(idColumnIndex);
+                String currentName = cursor.getString(nameColumnIndex);
+                String currentCity = cursor.getString(cityColumnIndex);
+                int currentGender = cursor.getInt(genderColumnIndex);
+                int currentAge = cursor.getInt(ageColumnIndex);
+
+                filteredUsers.add(new User(currentID, currentName, currentAge, currentCity, currentGender));
+            }
+
+            return Observable.create(new ObservableOnSubscribe<List<User>>() {
+                @Override
+                public void subscribe(ObservableEmitter<List<User>> e) throws Exception {
+
+                    if (!e.isDisposed()) {
+                        e.onNext(filteredUsers);
+                        e.onComplete();
+                    }
+                }
+            });
+        } finally {
+            // Always close cursor after reading
+            cursor.close();
+        }
     }
 
 

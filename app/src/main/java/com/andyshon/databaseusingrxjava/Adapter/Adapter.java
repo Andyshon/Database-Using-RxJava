@@ -33,11 +33,12 @@ public class Adapter extends ArrayAdapter<User> {
        User user = getItem(position);
 
        TextView tvId = convertView.findViewById(R.id.user_id);
+       TextView tvEntryNumber = convertView.findViewById(R.id.entry_number);
        TextView tvName = convertView.findViewById(R.id.user_name);
 
-       System.out.println(user);
-
        tvId.setText(String.valueOf(user.getId()));
+       String number = String.valueOf(++position).concat(".");
+       tvEntryNumber.setText(number);
        tvName.setText(user.getName());
 
        return convertView;

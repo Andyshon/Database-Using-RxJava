@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Database Using RxJava</string>
-    <string name="show_all_users">Show All Users</string>
+    <string name="refresh_users">Refresh Users</string>
     <string name="add_new_user">New user</string>
     <string name="nyc">NYC</string>
     <string name="male">Male</string>
@@ -12,4 +12,20 @@
     <string name="city">City</string>
     <string name="ok">OK</string>
     <string name="delete">Delete</string>
+    <string name="filter">Filter</string>
+    <string name="filter_by_age">By age:</string>
+    <string name="apply">APPLY</string>
+    <string name="no_filter">No filter</string>
+    <string name="filter_by_gender">By gender</string>
+
+    <string-array name="Age_filter">
+        <item>Less than</item>
+        <item>More than</item>
+        <item>Equal</item>
+    </string-array>
+
+    <string-array name="Gender_filter">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

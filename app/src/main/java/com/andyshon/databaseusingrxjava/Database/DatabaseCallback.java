@@ -21,6 +21,10 @@ public interface DatabaseCallback {
 
     interface ViewMain {
         void onGetAllUsers(List<User> users);
+
+        // with filters
+        void onGetUsersByAge(List<User> usersByAge);
+
         void onDataNotAvailable();
     }
 }

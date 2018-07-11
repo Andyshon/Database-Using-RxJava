@@ -8,6 +8,7 @@ import com.andyshon.databaseusingrxjava.Activity.MainActivity;
 import com.andyshon.databaseusingrxjava.Database.DatabaseCallback;
 import com.andyshon.databaseusingrxjava.Database.DatabaseModel;
 import com.andyshon.databaseusingrxjava.Database.UserContract;
+import com.andyshon.databaseusingrxjava.FilterOperation;
 
 import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,6 +34,16 @@ public class UserController {
             callbackViewDetail = (DatabaseCallback.ViewDetail) context;
 
         model = new DatabaseModel(context);
+    }
+
+
+
+    public void applyFilter (int byAge, FilterOperation.ByAge filterAge, FilterOperation.ByGender filterGender) {
+
+        model.getUsersByFilter(byAge, filterAge, filterGender)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(users -> callbackViewMain.onGetUsersByAge(users));
     }
 
 
