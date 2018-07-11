@@ -16,6 +16,7 @@ public enum FilterOperation {
 
         public static ByAge toMyEnum (String myEnumString) {
             try {
+                System.out.println("value of:" + valueOf(myEnumString));
                 return valueOf(myEnumString);
             } catch (Exception ex) {
                 // For error cases
@@ -43,6 +44,7 @@ public enum FilterOperation {
 
         public static ByGender toMyEnum (String myEnumString) {
             try {
+                System.out.println("value of22:" + valueOf(myEnumString));
                 return valueOf(myEnumString);
             } catch (Exception ex) {
                 // For error cases

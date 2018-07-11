@@ -59,8 +59,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseCallback.
     private void initUI() {
 
         filterByAge = UserPreferences.getMyEnumByAge(this);
+        System.out.println("FILTER:" + filterByAge);
         filterByGender = UserPreferences.getMyEnumByGender(this);
+        System.out.println("FILTER GENDER:" + filterByGender);
         filterAgeNumber = UserPreferences.getFilterByAge(this);
+        System.out.println("USERNUMBER:" + filterAgeNumber);
 
         controller = new UserController(this);
 
@@ -112,8 +115,12 @@ public class MainActivity extends AppCompatActivity implements DatabaseCallback.
 
         btnFilterApply.setOnClickListener(view -> {
 
+
             filterByAge = (FilterOperation.ByAge) spinnerFilterAge.getSelectedItem();
+            System.out.println("filter By Age:" + filterByAge);
+
             filterByGender = (FilterOperation.ByGender) spinnerFilterGender.getSelectedItem();
+            System.out.println("filter By Gender:" + filterByGender);
 
             UserPreferences.SaveUserPreferences(this, filterByAge, filterByGender, Integer.parseInt(etFilterAge.getText().toString()));
 
