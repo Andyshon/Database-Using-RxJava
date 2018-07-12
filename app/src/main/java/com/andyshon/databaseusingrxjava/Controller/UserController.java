@@ -2,7 +2,6 @@ package com.andyshon.databaseusingrxjava.Controller;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 
 import com.andyshon.databaseusingrxjava.Activity.MainActivity;
 import com.andyshon.databaseusingrxjava.Database.DatabaseCallback;
@@ -37,13 +36,12 @@ public class UserController {
     }
 
 
-
     public void applyFilter (int byAge, FilterOperation.ByAge filterAge, FilterOperation.ByGender filterGender) {
 
         model.getUsersByFilter(byAge, filterAge, filterGender)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(users -> callbackViewMain.onGetUsersByAge(users));
+                .subscribe(users -> callbackViewMain.onGetUsersWithFilter(users));
     }
 
 
@@ -81,7 +79,6 @@ public class UserController {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("UserController", "Eror:" + e.getMessage());
                         callbackViewDetail.onDataNotAvailable();
                     }
                 });
@@ -90,7 +87,6 @@ public class UserController {
 
     public void addUser(ContentValues values) {
 
-        // Вставляем новый ряд в базу данных и запоминаем его идентификатор
         values.put(UserContract.UserEntry.COLUMN_NAME, values.getAsString(UserContract.UserEntry.COLUMN_NAME));
         values.put(UserContract.UserEntry.COLUMN_AGE, values.getAsString(UserContract.UserEntry.COLUMN_AGE));
         values.put(UserContract.UserEntry.COLUMN_CITY, values.getAsString(UserContract.UserEntry.COLUMN_CITY));

@@ -23,7 +23,7 @@ public interface DatabaseCallback {
         void onGetAllUsers(List<User> users);
 
         // with filters
-        void onGetUsersByAge(List<User> usersByAge);
+        void onGetUsersWithFilter(List<User> usersByAge);
 
         void onDataNotAvailable();
     }
