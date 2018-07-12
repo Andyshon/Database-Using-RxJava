@@ -14,14 +14,14 @@ public enum FilterOperation {
         MORETHAN("age more than"),
         EQUALS("age equals");
 
-        public static ByAge toMyEnum (String myEnumString) {
-            try {
-                System.out.println("value of:" + valueOf(myEnumString));
-                return valueOf(myEnumString);
-            } catch (Exception ex) {
-                // For error cases
-                return EQUALS;
+
+        public static ByAge fromString(String text) {
+            for (ByAge b : ByAge.values()) {
+                if (b.age.equalsIgnoreCase(text)) {
+                    return b;
+                }
             }
+            return null;
         }
 
         private String age;
@@ -42,14 +42,13 @@ public enum FilterOperation {
         FEMALE("female"),
         BOTH("both");
 
-        public static ByGender toMyEnum (String myEnumString) {
-            try {
-                System.out.println("value of22:" + valueOf(myEnumString));
-                return valueOf(myEnumString);
-            } catch (Exception ex) {
-                // For error cases
-                return MALE;
+        public static ByGender fromString(String text) {
+            for (ByGender b : ByGender.values()) {
+                if (b.gender.equalsIgnoreCase(text)) {
+                    return b;
+                }
             }
+            return null;
         }
 
         private String gender;
