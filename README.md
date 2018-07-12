@@ -1,2 +1,2 @@
 # Database-Using-RxJava
-SQLite using RxJava and some more
+SQLite using RxJava and some more filter functionality
